@@ -36,59 +36,62 @@ body {
     height: 100%;
 
     .tile {
-	display: none;
-	position: absolute;
-	top: 50%;
-	left: 0;
-	z-index: 0;
-	overflow: hidden;
-	height: 100%;
-	width: 50%;
-	@include transform-origin(right, top);
+    display: none;
+    position: absolute;
+    top: 50%;
+    left: 0;
+    z-index: 0;
+    overflow: hidden;
+    height: 100%;
+    width: 50%;
+    @include transform-origin(right, top);
 
-	.image {
-	    position: relative;
-	    top: 0;
-	    left: 100%;
-	    height: 100%;
-	    width: 100%;
-	    background-image: url(../img/butterfly-montage.jpg); // Apologies to Damien Hirst.
-	    @include transform-origin();
-	 }
+    .image {
+        position: relative;
+        top: 0;
+        left: 100%;
+        height: 100%;
+        width: 100%;
+        background-image: url(../img/butterfly-montage.jpg); // Apologies to Damien Hirst.
+        @include transform-origin();
+        @include prefix-values('transform', rotateZ(360deg));
+        @include prefix-values('backface-visibility', 'hidden');
+        @include prefix-values('perspective', 1000);
+     }
     }
 
     $max_segments: 32;
     $segments: 0;
 
     @while $segments <= $max_segments {
-	$step: 360deg / ($segments * 2);
+    $step: 360deg / ($segments * 2);
 
-	$angle: 0 - $step;
-	$i: 0;
+    $angle: 0 - $step;
+    $i: 0;
 
-	&.n#{$segments} {
+    &.n#{$segments} {
 
-	    .tile {
-	        display: block;
+        .tile {
+            display: block;
 
-		@while $i < $segments * 2 {
-		    &.t#{$i} {
-			@include transform-rotate($angle + $step);
-		    }
+        @while $i < $segments * 2 {
+            &.t#{$i} {
+            @include transform-rotate($angle + $step);
+            }
 
-		    &.t#{$i+1} {
-			@include transform-mirror-rotate($angle + $step);
-		    }
+            &.t#{$i+1} {
+            @include transform-mirror-rotate($angle + $step);
+            }
 
-		    $angle: $angle + ($step * 2);
-		    $i: $i + 2;
-		}
-		.image {
-		    @include transform-rotate($step);
-		}
-	    }
-	}
-	$segments: $segments + 1;
+            $angle: $angle + ($step * 2);
+            $i: $i + 2;
+        }
+        .image {
+            @include transform-rotate($step);
+        }
+        }
+    }
+    $segments: $segments + 1;
     }
     
 }
@@ -113,30 +116,30 @@ nav {
 
     a {
         color: #666;
-    	text-decoration: none;
+        text-decoration: none;
     }
 
     & > * {
-	float: left;
-	padding: 0.6em;
+    float: left;
+    padding: 0.6em;
 
         background-color: #eee;
         opacity: 0.8;
 
-    	&:hover {
+        &:hover {
             opacity: 0.9;
         }
 
-	&:nth-child(n + 2) {
-	    border-left: 1px solid #666;
-	}
+    &:nth-child(n + 2) {
+        border-left: 1px solid #666;
+    }
 
-	&:first-child {
-	    border-bottom-left-radius: 0.6em;
-	}
+    &:first-child {
+        border-bottom-left-radius: 0.6em;
+    }
 
-	&:last-child {
-	    border-bottom-right-radius: 0.6em;
-	}
+    &:last-child {
+        border-bottom-right-radius: 0.6em;
+    }
     }
 }
